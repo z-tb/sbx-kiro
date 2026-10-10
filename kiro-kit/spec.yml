@@ -1,0 +1,45 @@
+schemaVersion: "2"
+kind: mixin
+name: kiro-network-policy
+description: "Network permissions overlay for Kiro"
+
+# wildcard domains are have to be specified last for some reason and only work
+# for the first tier of the domain, e.g. *.kiro.dev will work for foo.kiro.dev
+# but  will not allow *.us-east-1.kiro.dev
+permissions:
+  network:
+    allow:
+      - archive.ubuntu.com
+      - cli.kiro.dev
+      - client-telemetry.us-east-1.amazonaws.com
+      - cognito-identity.us-east-1.amazonaws.com
+      - desktop-release.q.us-east-1.amazonaws.com
+      - dl-cdn.alpinelinux.org
+      - docs.nextstrain.org
+      - docs.docker.com
+      - download.docker.com
+      - google.com
+      - main.vscode-cdn.net
+      - management.eu-central-1.kiro.dev
+      - management.us-east-1.kiro.dev
+      - mobile.events.data.microsoft.com
+      - nextstrain.org
+      - oidc.us-east-1.amazonaws.com
+      - oidc.us-east-2.amazonaws.com
+      - prod.download.cli.kiro.dev
+      - prod.us-east-1.auth.desktop.kiro.dev
+      - prod.us-east-1.telemetry-v2.kiro.dev
+      - q.us-east-1.amazonaws.com
+      - runtime.us-east-1.kiro.dev
+      - security.ubuntu.com
+      - sso.us-east-1.amazonaws.com
+      - sso-portal.us-east-1.amazonaws.com
+      - update.code.visualstudio.com
+      - uw-madison-fourpoints-strides.awsapps.com
+      - view.awsapps.com
+      - vscode.download.prss.microsoft.com
+      - wisc.edu
+      - "*.kiro.dev"
+      - "*.us-east-1.kiro.dev"
+      - "*.wisc.edu"
+     

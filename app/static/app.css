@@ -1,0 +1,384 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #666;
+  --border: #ddd;
+  --accent: #2563eb;
+  --surface: #f6f7f9;
+}
+html[data-theme="dark"] {
+  --bg: #15171a;
+  --fg: #e6e6e6;
+  --muted: #9aa0a6;
+  --border: #2c2f34;
+  --accent: #60a5fa;
+  --surface: #1d2024;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 14px/1.5 system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+.muted { color: var(--muted); }
+.hidden { display: none !important; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.brand { font-weight: 600; }
+.icon-btn, .link-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+}
+.link-btn { color: var(--accent); font-size: 0.85rem; }
+
+.landing { max-width: 560px; margin: 48px auto; padding: 0 16px; }
+.sandbox-list { list-style: none; padding: 0; }
+.sandbox-list li { margin: 6px 0; }
+.sandbox-list button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--surface);
+  color: inherit;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.sandbox-list button:hover { border-color: var(--accent); }
+
+.app { display: flex; min-height: calc(100vh - 49px); }
+.sidebar {
+  width: 220px;
+  border-right: 1px solid var(--border);
+  padding: 16px;
+}
+.context { margin-bottom: 16px; display: flex; flex-direction: column; gap: 2px; }
+.nav { list-style: none; padding: 0; margin: 0; }
+.nav-item {
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  color: inherit;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.nav-item:hover, .nav-item.active { background: var(--surface); }
+.content { flex: 1; padding: 24px; --eg-sticky-top: 58px; }
+
+/* Secrets view */
+.section-head { display: flex; align-items: center; justify-content: space-between; }
+.btn {
+  padding: 7px 12px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--border); }
+.link-btn.danger { color: #dc2626; }
+
+.card {
+  margin: 14px 0;
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  max-width: 480px;
+}
+.card .row { margin-bottom: 10px; }
+.card label { display: flex; flex-direction: column; gap: 4px; font-size: 0.85rem; }
+.card select, .card input {
+  padding: 7px 8px;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.masked-input { display: flex; gap: 6px; align-items: center; }
+.masked-input input { flex: 1; }
+.row.actions { display: flex; gap: 8px; }
+.small { font-size: 0.78rem; }
+.error { color: #dc2626; font-size: 0.82rem; min-height: 1em; }
+
+.secret-group { margin: 18px 0; }
+.secret-group h3 { margin: 0 0 6px; font-size: 0.95rem; }
+.scope-section { margin: 22px 0; }
+.scope-title {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--accent);
+  display: inline-block;
+}
+.secret-table { width: 100%; border-collapse: collapse; }
+.secret-table th, .secret-table td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+.secret-table th { color: var(--muted); font-weight: 500; }
+
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+.badge.allow { background: #dcfce7; color: #166534; }
+.badge.deny { background: #fee2e2; color: #991b1b; }
+.badge.set { background: var(--surface); color: var(--muted); border: 1px solid var(--border); }
+html[data-theme="dark"] .badge.allow { background: #14532d; color: #bbf7d0; }
+html[data-theme="dark"] .badge.deny { background: #7f1d1d; color: #fecaca; }
+
+/* Egress toolbar: find/narrow controls on the left, result context on the right.
+   Sticky so filter + facets stay reachable while the rules list scrolls. The
+   content area owns the page scroll (topbar is not fixed), so top:0 pins the
+   toolbar to the viewport top after the topbar scrolls off. Negative margins +
+   matching padding let the opaque backing span the content's 24px padding so
+   rows scroll cleanly underneath. */
+.eg-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 -24px;
+  padding: 14px 24px 10px;
+  background: var(--bg);
+  flex-wrap: wrap;
+}
+.eg-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.eg-filter-wrap { position: relative; display: inline-flex; align-items: center; }
+.eg-filter {
+  padding: 6px 28px 6px 10px;
+  min-width: 240px;
+  background: var(--bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.eg-filter:focus { outline: none; border-color: var(--accent); }
+/* Suppress the native search clear so we don't show two ×'s (WebKit). */
+.eg-filter::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.eg-filter-clear {
+  position: absolute;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.eg-filter-clear:hover { background: var(--surface); color: var(--fg); }
+
+/* Segmented control: joined, mutually-exclusive state facets. */
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.segmented .seg {
+  padding: 6px 12px;
+  background: var(--bg);
+  color: var(--fg);
+  border: none;
+  border-left: 1px solid var(--border);
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.segmented .seg:first-child { border-left: none; }
+.segmented .seg:hover { background: var(--surface); }
+.segmented .seg.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* Active-filter status chip: only visible while a filter is applied. */
+.filter-status { display: none; }
+.filter-status.is-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 999px;
+}
+
+/* Contextual bulk-action bar: revealed only when rows are selected. Sticks
+   directly under the toolbar so its actions stay reachable while rows scroll. */
+.bulk-bar {
+  position: sticky;
+  top: var(--eg-sticky-top, 58px);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0 6px;
+  padding: 8px 12px;
+  background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+}
+.bulk-count { font-size: 0.82rem; font-weight: 600; }
+.bulk-actions { display: flex; align-items: center; gap: 8px; }
+.danger-btn { color: #dc2626; border-color: #dc2626 !important; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.small-btn { padding: 5px 10px; font-size: 0.82rem; }
+
+/* Rules table */
+.rules-table th.chk, .rules-table td.chk { width: 28px; text-align: center; }
+/* Sticky column header: pins just below the sticky toolbar while rows scroll.
+   --eg-sticky-top ≈ toolbar height; th carries the background (thead/tr can't
+   paint a sticky backing reliably across browsers). */
+.rules-table thead th {
+  position: sticky;
+  top: var(--eg-sticky-top, 58px);
+  z-index: 10;
+  background: var(--bg);
+}
+.rules-table .domain { font-family: ui-monospace, monospace; font-size: 0.82rem; }
+.rules-table .domain.wildcard { color: #c026d3; font-weight: 600; }
+html[data-theme="dark"] .rules-table .domain.wildcard { color: #facc15; }
+.warn { cursor: help; }
+
+/* Policy-log rows (observed traffic, not a configured rule): amber row wash
+   + a left accent spine so they stand out from real rules at a glance. Amber
+   sits on a different axis than the State badge (red/green), so it won't clash. */
+.rules-table tr.log-row td { background: color-mix(in srgb, #d97706 10%, var(--bg)); }
+.rules-table tr.log-row td:first-child { border-left: 3px solid #d97706; }
+.rules-table tr.log-row:hover td { background: color-mix(in srgb, #d97706 16%, var(--bg)); }
+html[data-theme="dark"] .rules-table tr.log-row td { background: color-mix(in srgb, #fbbf24 14%, var(--bg)); }
+html[data-theme="dark"] .rules-table tr.log-row td:first-child { border-left-color: #fbbf24; }
+html[data-theme="dark"] .rules-table tr.log-row:hover td { background: color-mix(in srgb, #fbbf24 20%, var(--bg)); }
+
+/* Bundled rules (one row = one multi-host rule): violet/indigo spine+wash,
+   mirroring the amber .log-row treatment with a distinct hue. */
+.rules-table tr.bundle-row td { background: color-mix(in srgb, #7c3aed 10%, var(--bg)); }
+.rules-table tr.bundle-row td:first-child { border-left: 3px solid #7c3aed; }
+.rules-table tr.bundle-row:hover td { background: color-mix(in srgb, #7c3aed 16%, var(--bg)); }
+html[data-theme="dark"] .rules-table tr.bundle-row td { background: color-mix(in srgb, #a78bfa 14%, var(--bg)); }
+html[data-theme="dark"] .rules-table tr.bundle-row td:first-child { border-left-color: #a78bfa; }
+html[data-theme="dark"] .rules-table tr.bundle-row:hover td { background: color-mix(in srgb, #a78bfa 20%, var(--bg)); }
+/* "(+N more)" link inside a bundle host cell. */
+.rules-table .bundle-more {
+  background: none; border: none; padding: 0; cursor: pointer;
+  color: #7c3aed; font-size: 0.8rem; font-family: inherit;
+}
+.rules-table .bundle-more:hover { text-decoration: underline; }
+html[data-theme="dark"] .rules-table .bundle-more { color: #a78bfa; }
+/* Host Bundle info dialog list. */
+.info-dialog .info-list {
+  list-style: none; margin: 8px 0 4px; padding: 0;
+  max-height: 50vh; overflow-y: auto;
+}
+.info-dialog .info-list li {
+  font-family: ui-monospace, monospace; font-size: 0.82rem;
+  padding: 3px 0; border-bottom: 1px solid color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* Activity */
+.activity-section { margin: 18px 0; }
+
+/* --- Flash banner (AWS-style): colored left border, icon, dismissible --- */
+#eg-flash { margin: 8px 0; }
+.flash {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-left-width: 4px;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--fg);
+  animation: flash-in 0.2s ease-out;
+}
+.flash-out { opacity: 0; transition: opacity 0.25s ease; }
+@keyframes flash-in { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+.flash-icon { font-weight: 700; line-height: 1.4; }
+.flash-msg { flex: 1; }
+.flash-close {
+  background: none; border: none; color: var(--muted);
+  cursor: pointer; font-size: 1.1rem; line-height: 1; padding: 0 2px;
+}
+.flash-close:hover { color: var(--fg); }
+
+.flash-error   { border-left-color: #dc2626; }
+.flash-warning { border-left-color: #d97706; }
+.flash-success { border-left-color: #16a34a; }
+.flash-info    { border-left-color: var(--accent); }
+.flash-error   .flash-icon { color: #dc2626; }
+.flash-warning .flash-icon { color: #d97706; }
+.flash-success .flash-icon { color: #16a34a; }
+.flash-info    .flash-icon { color: var(--accent); }
+
+html[data-theme="dark"] .flash-error   { border-left-color: #f87171; }
+html[data-theme="dark"] .flash-warning { border-left-color: #fbbf24; }
+html[data-theme="dark"] .flash-success { border-left-color: #4ade80; }
+html[data-theme="dark"] .flash-error   .flash-icon { color: #f87171; }
+html[data-theme="dark"] .flash-warning .flash-icon { color: #fbbf24; }
+html[data-theme="dark"] .flash-success .flash-icon { color: #4ade80; }
+
+/* --- Reusable floating flash container (used outside the egress panel) --- */
+#flash-float {
+  position: fixed;
+  top: 56px;
+  right: 16px;
+  left: auto;
+  max-width: 420px;
+  z-index: 1000;
+}
+
+/* --- Reusable confirm <dialog> --- */
+.confirm-dialog {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  max-width: 440px;
+  width: calc(100% - 32px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+.confirm-dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+.confirm-body { padding: 18px 18px 14px; margin: 0; }
+.confirm-title { margin: 0 0 8px; font-size: 1.05rem; }
+.confirm-msg { margin: 0 0 16px; color: var(--fg); }
+.confirm-actions { display: flex; justify-content: flex-end; gap: 8px; }

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>sbx Manager</title>
+  <link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+  <header class="topbar">
+    <span class="brand">sbx Manager</span>
+    <button id="theme-toggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">🌓</button>
+  </header>
+
+  <!-- Landing view: pick a sandbox (or Global) before anything else. -->
+  <main id="landing" class="landing">
+    <h1>Select a sandbox</h1>
+    <p class="muted">Choose the context for managing secrets and egress.</p>
+    <ul id="sandbox-list" class="sandbox-list">
+      <li class="muted">Loading…</li>
+    </ul>
+  </main>
+
+  <!-- App view: revealed after a sandbox is selected. -->
+  <div id="app" class="app hidden">
+    <nav class="sidebar">
+      <div class="context">
+        <span class="muted">Context</span>
+        <strong id="active-context">—</strong>
+        <button id="change-context" class="link-btn">change</button>
+      </div>
+      <ul class="nav">
+        <li><button class="nav-item" data-view="secrets">Secrets</button></li>
+        <li><button class="nav-item" data-view="egress">Egress</button></li>
+      </ul>
+    </nav>
+    <section id="content" class="content">
+      <p class="muted">Pick a section.</p>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
