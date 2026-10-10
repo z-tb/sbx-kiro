@@ -1,6 +1,6 @@
 # sbx-kiro
 
-This is a work-in-progress [Docker sandbox](https://docs.docker.com/ai/sandboxes/) (`sbx`) template for running the Kiro LLM in a Docker SBX environment, plus a web UI for managing the sandbox. The SBX tui is OK but navigating and managing takes different views and it seems a little janky yet. The web UI is a locally running python server that tries to present all the egress complexity in one view.  I do like it so far but still needs tuning.
+This is a work-in-progress [Docker sandbox](https://docs.docker.com/ai/sandboxes/) (`sbx`) template for running the Kiro LLM in a Docker SBX environment, plus a web UI for managing the sandbox. The SBX tui is OK but navigating and managing takes different views and it seems a little janky yet so I came up with this idea. The web UI is a locally running python server that tries to present all the egress complexity in one view.  I do like it so far but still needs tuning.
 
 The two parts:
 
